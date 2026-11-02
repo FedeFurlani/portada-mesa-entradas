@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Portada Mesa de Entradas · UNSJ</title>
+<meta name="description" content="Completá los datos y descargá la portada de Mesa de Entradas en alta calidad." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="top">
+  <div class="top__inner">
+    <div class="top__brand">
+      <span class="top__mark">ME</span>
+      <div>
+        <h1>Portada Mesa de Entradas</h1>
+        <p>Universidad Nacional de San Juan · completá y descargá</p>
+      </div>
+    </div>
+    <div class="top__actions">
+      <button class="btn btn--primary" id="btnPrint" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v7H6z"/></svg>
+        Imprimir
+      </button>
+      <button class="btn btn--ghost" id="btnJpg" type="button">JPG</button>
+      <button class="btn btn--ghost" id="btnPng" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+        PNG · 300 dpi
+      </button>
+    </div>
+  </div>
+  <div class="top__print">
+    <div class="top__print-inner">
+      <div class="print-choice">
+        <span class="print-choice__label">Formato</span>
+        <div class="seg print-opt" role="group" aria-label="Formato de impresión">
+          <button class="seg__btn is-on" data-print="full" type="button">Opción 1</button>
+          <button class="seg__btn" data-print="half" type="button">Opción 2</button>
+        </div>
+        <p class="print-opt__desc" id="printOptDesc">Hoja A4 completa · portada entera</p>
+      </div>
+      <p class="print-hint">Imprimir abre la vista previa del sistema: ahí elegís impresora y bandeja.</p>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ================= formulario ================= -->
+  <section class="panel" aria-label="Datos del expediente">
+    <div class="panel__head">
+      <h2>Datos</h2>
+      <div class="panel__links">
+        <button class="link" id="btnSample" type="button">Datos de prueba</button>
+        <button class="link" id="btnClear" type="button">Limpiar</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <label class="field">
+        <span>Expediente N°</span>
+        <input id="f-exp" type="text" placeholder="13-063-S-17" autocomplete="off" />
+      </label>
+      <label class="field field--sm">
+        <span>Letra</span>
+        <input id="f-letra" type="text" placeholder="S" maxlength="4" autocomplete="off" />
+      </label>
+    </div>
+
+    <label class="field">
+      <span>Iniciador</span>
+      <input id="f-iniciador" type="text" placeholder="Secretaría de Extensión Universitaria" autocomplete="off" />
+      <small>Hasta 2 renglones; el texto se ajusta solo.</small>
+    </label>
+
+    <label class="field">
+      <span>Extracto</span>
+      <textarea id="f-extracto" rows="3" placeholder="Proyecto de Identidad Institucional de la UNSJ"></textarea>
+      <small>Hasta 3 renglones.</small>
+    </label>
+
+    <div class="field">
+      <div class="field__top">
+        <span>Fecha</span>
+        <button class="link link--sm" id="btnToday" type="button">Usar hoy</button>
+      </div>
+      <div class="row row--date">
+        <input id="f-dia" type="text" inputmode="numeric" maxlength="2" placeholder="19" aria-label="Día" />
+        <input id="f-mes" type="text" maxlength="12" placeholder="diciembre" aria-label="Mes" />
+        <input id="f-anio" type="text" inputmode="numeric" maxlength="4" placeholder="2017" aria-label="Año" />
+      </div>
+    </div>
+
+    <div class="panel__note">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z"/><path d="M12 16v-5M12 8h.01"/></svg>
+      <p id="noteText">El archivo se genera a <strong>300 dpi</strong>. Los datos quedan guardados en este navegador.</p>
+    </div>
+  </section>
+
+  <!-- ================= vista previa ================= -->
+  <section class="preview" aria-label="Vista previa">
+    <div class="preview__bar">
+      <div class="seg" role="group" aria-label="Qué se muestra">
+        <button class="seg__btn" data-mode="full" type="button">Portada completa</button>
+        <button class="seg__btn" data-mode="text" type="button">Solo texto</button>
+      </div>
+      <div class="preview__tools">
+        <button class="fs-btn" id="btnFs" type="button" aria-pressed="false">Pantalla completa</button>
+        <span class="preview__meta" id="fileName">portada.png</span>
+      </div>
+    </div>
+
+    <div class="adjust" id="adjust" hidden>
+      <div class="adjust__row">
+        <label class="switch" id="guideLabel">
+          <input type="checkbox" id="f-guide" checked />
+          <span>Ver diseño de guía</span>
+        </label>
+        <span class="adjust__tip" id="adjustTip">Arrastrá un dato · flechas = ajuste fino</span>
+        <div class="hist-btns" role="group" aria-label="Historial de movimiento">
+          <button class="btn btn--ghost btn--hist" id="btnUndo" type="button" title="Ctrl+Z">↶ Deshacer</button>
+          <button class="btn btn--ghost btn--hist" id="btnRedo" type="button" title="Ctrl+Shift+Z">↷ Rehacer</button>
+        </div>
+        <button class="link link--sm" id="btnResetFields" type="button">Restablecer posiciones</button>
+      </div>
+      <div class="adjust__row adjust__row--sub">
+        <span class="adjust__title">Todo el bloque</span>
+        <label>Letra <input id="f-font" type="number" value="100" min="70" max="200" step="1" /> %</label>
+        <label>Escala <input id="f-scale" type="number" value="100" min="40" max="160" step="1" /> %</label>
+        <label>X <input id="f-dx" type="number" value="0" step="1" /> mm</label>
+        <label>Y <input id="f-dy" type="number" value="0" step="1" /> mm</label>
+        <button class="link link--sm" id="btnResetAdjust" type="button">Reiniciar</button>
+      </div>
+    </div>
+
+    <div class="paper">
+      <div class="paper-tools">
+        <div class="hist-hud" aria-label="Historial de movimiento">
+          <button type="button" id="btnUndoPaper" title="Deshacer movimiento (Ctrl+Z)">↶</button>
+          <button type="button" id="btnRedoPaper" title="Rehacer movimiento (Ctrl+Shift+Z)">↷</button>
+        </div>
+        <div class="size-hud" id="sizeHud" aria-label="Tamaño de letra">
+          <span class="size-hud__label">Tamaño</span>
+          <button type="button" id="btnFontDown" title="Achicar letra">A−</button>
+          <span id="fontHudVal">100%</span>
+          <button type="button" id="btnFontUp" title="Agrandar letra">A+</button>
+        </div>
+      </div>
+      <!-- Lienzo A4: 210×297 mm → 511 × (511×297/210) ≈ 722.56 -->
+      <svg id="cover" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 511 722.56" preserveAspectRatio="xMinYMin meet" role="img" aria-label="Portada de Mesa de Entradas">
+        <defs>
+          <linearGradient id="band" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#427AA9"/>
+            <stop offset="0.55" stop-color="#3D74A2"/>
+            <stop offset="1" stop-color="#396D9A"/>
+          </linearGradient>
+          <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#A6BACB"/>
+            <stop offset="0.5" stop-color="#7B91A7"/>
+            <stop offset="1" stop-color="#5D7389"/>
+          </linearGradient>
+          <filter id="grain" x="0" y="0" width="100%" height="100%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="11" result="n"/>
+            <feColorMatrix in="n" type="saturate" values="0"/>
+            <feComponentTransfer><feFuncA type="linear" slope="0.5"/></feComponentTransfer>
+          </filter>
+          <clipPath id="logoClip"><circle cx="400" cy="117" r="23.6"/></clipPath>
+          <style>
+            .h-serif{ font-family: Georgia, "Times New Roman", serif; }
+            .h-sans{ font-family: Tahoma, Verdana, "DejaVu Sans", sans-serif; }
+            .h-narrow{ font-family: "Arial Narrow", "Nimbus Sans Narrow", "Liberation Sans Narrow", Tahoma, sans-serif; }
+            .lbl{ font-family: "Times New Roman", Times, serif; font-size: 9.2px; font-weight: 700; fill: #2E4053; }
+            .val{ font-family: "Times New Roman", Times, serif; font-size: 9.2px; font-weight: 400; fill: #1B2A3A; }
+            .ln{ stroke: #C2CCDF; stroke-width: .9; }
+          </style>
+        </defs>
+
+        <!-- papel A4 -->
+        <rect class="sheet" width="511" height="722.56" fill="#FFFFFF"/>
+
+        <g id="page">
+          <!-- ===== diseño de la portada ===== -->
+          <g class="design">
+            <rect x="0" y="0" width="126" height="722.56" fill="url(#band)"/>
+            <rect x="0" y="0" width="126" height="722.56" fill="#173F63" opacity="0.16" filter="url(#grain)"/>
+            <rect x="124.8" y="0" width="1.2" height="722.56" fill="#2F5E88" opacity=".35"/>
+
+            <g>
+              <path d="M104 180 L136 212 L104 244 L72 212 Z" fill="#3C4E64"/>
+              <path d="M150 182 L174 212 L150 242 L126 212 Z" fill="#4479A6"/>
+              <path d="M104 251 L132 281 L104 311 L76 281 Z" fill="#3C4E64"/>
+              <path d="M146 262 L166 281 L146 300 L126 281 Z" fill="#4479A6"/>
+              <path d="M106 318 L132 345 L106 372 L80 345 Z" fill="#3C4E64"/>
+              <path d="M148 318 L171 345 L148 372 L125 345 Z" fill="#4479A6"/>
+              <path d="M96 414 L130 468 L96 522 L62 468 Z" fill="#3C4E64"/>
+              <path d="M150 427 L173 468 L150 509 L127 468 Z" fill="#4479A6"/>
+            </g>
+
+            <text x="171" y="104" class="h-serif" font-size="21.5" letter-spacing=".2" fill="#6B93B6">RECTORADO</text>
+            <text x="170" y="122" class="h-sans" font-size="10.6" font-weight="700" fill="#3B4753">Edificio Central UNSJ.</text>
+            <text x="170" y="174" class="h-sans" font-size="11.8" font-weight="700" letter-spacing=".2" fill="#333F4D">MESA DE ENTRADAS,</text>
+            <text x="170" y="193" class="h-sans" font-size="11.8" font-weight="700" letter-spacing=".2" fill="#333F4D">SALIDAS Y ARCHIVO.</text>
+            <line x1="328" y1="73" x2="328" y2="214" stroke="#818B95" stroke-width="1.1"/>
+
+            <g>
+              <circle cx="400" cy="117" r="28" fill="none" stroke="#4A4E57" stroke-width="4.4"/>
+              <circle cx="400" cy="117" r="23.6" fill="#FFFFFF"/>
+              <g clip-path="url(#logoClip)">
+                <path d="M376 127 q6 -4.5 12 0 t12 0 t12 0 t12 0 V141 H376 Z" fill="url(#water)"/>
+              </g>
+              <circle cx="400" cy="105" r="6.3" fill="none" stroke="#4A4E57" stroke-width="2.5"/>
+              <circle cx="400" cy="105" r="2" fill="#4A4E57"/>
+              <text x="400" y="160.5" text-anchor="middle" class="h-sans" font-size="8.8" font-weight="600" fill="#5A5F6B">Universidad</text>
+              <text x="400" y="174.9" text-anchor="middle" class="h-sans" font-size="8.8" font-weight="600" fill="#5A5F6B">Nacional</text>
+              <text x="400" y="189.3" text-anchor="middle" class="h-sans" font-size="8.8" font-weight="600" fill="#5A5F6B">de San Juan</text>
+            </g>
+          </g>
+
+          <!-- ===== casillas: cada grupo mueve etiqueta + renglones + dato ===== -->
+          <g id="fields">
+            <g class="fgroup" data-field="exp">
+              <g class="dp">
+                <text x="229" y="300" class="lbl">Expie N°</text>
+                <line class="ln" x1="274" y1="299.5" x2="381" y2="299.5"/>
+              </g>
+              <text id="v-exp" x="276" y="297" class="val"></text>
+            </g>
+
+            <g class="fgroup" data-field="letra">
+              <g class="dp">
+                <text x="388" y="299" class="lbl">Letra</text>
+                <line class="ln" x1="417" y1="299.5" x2="457" y2="299.5"/>
+              </g>
+              <text id="v-letra" x="419" y="297" class="val"></text>
+            </g>
+
+            <g class="fgroup" data-field="ini">
+              <g class="dp">
+                <text x="228" y="351" class="lbl">Iniciador:</text>
+                <line class="ln" x1="276" y1="350.5" x2="455" y2="350.5"/>
+                <line class="ln" x1="228" y1="370" x2="456" y2="370"/>
+              </g>
+              <text id="v-ini" class="val"></text>
+            </g>
+
+            <g class="fgroup" data-field="ext">
+              <g class="dp">
+                <text x="229" y="396" class="lbl">Extracto:</text>
+                <line class="ln" x1="275" y1="395.5" x2="457" y2="395.5"/>
+                <line class="ln" x1="228" y1="413.5" x2="457" y2="413.5"/>
+                <line class="ln" x1="228" y1="431.5" x2="457" y2="431.5"/>
+              </g>
+              <text id="v-ext" class="val"></text>
+            </g>
+
+            <g class="fgroup" data-field="fecha">
+              <g class="dp">
+                <text x="229" y="487" class="lbl" font-weight="400">San Juan,</text>
+                <text x="307" y="487" class="lbl" font-weight="400">de</text>
+                <text x="387" y="487" class="lbl" font-weight="400">de</text>
+              </g>
+              <text id="v-dia" x="290" y="487" class="val" text-anchor="middle"></text>
+              <text id="v-mes" x="322" y="487" class="val"></text>
+              <text id="v-anio" x="401" y="487" class="val"></text>
+            </g>
+          </g>
+
+          <!-- textura de papel -->
+          <rect class="design" width="511" height="722.56" filter="url(#grain)" opacity=".045" style="mix-blend-mode:multiply"/>
+        </g>
+      </svg>
+    </div>
+
+    <p class="preview__hint" id="hint">
+      Los renglones se completan con los datos de la izquierda. Si un texto es muy largo, se reduce el tamaño para que entre.
+    </p>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
